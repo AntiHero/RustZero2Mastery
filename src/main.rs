@@ -1,49 +1,80 @@
-#[derive(Debug)]
-struct Person {
-    age: u8,
-    name: String,
-    fav_color: String,
+// derive is a macro that can be applied to enums and structs (adds additional functionality)
+#[derive(Debug, Clone, Copy)]
+enum Position {
+    Manager,
+    Supervisor,
+    Worker,
 }
 
-impl Person {
-    fn print_fav_color(&self) {
-        println!("{}", self.fav_color)
-    }
-
-    fn print_name(&self) {
-        println!("{}", self.name)
-    }
+#[derive(Debug, Copy, Clone)] // all fields in struct also should derive
+struct Employee {
+    position: Position,
+    work_hours: u64,
 }
 
 fn main() {
-    let people = vec![
-        Person {
-            name: "Bob".to_owned(),
-            age: 20,
-            fav_color: String::from("Red"),
-        },
-        Person {
-            name: "Alice".to_owned(),
-            age: 40,
-            fav_color: String::from("Green"),
-        },
-        Person {
-            name: "Eve".to_owned(),
-            age: 33,
-            fav_color: String::from("Blue"),
-        },
-    ];
+    let me = Employee {
+        position: Position::Supervisor,
+        work_hours: 30,
+    };
 
-    for peep in &people {
-        match peep.age {
-            x if x <= 33 => {
-                peep.print_name();
-                peep.print_fav_color()
-            }
-            _ => {}
-        }
-    }
+    // no move occurs
+    print_employee(me);
+    // :? - debug print token
+    println!("{:?}", me.position);
+    println!("{:?}", me);
 }
+
+fn print_employee(employee: Employee) {
+    println!("{:?}", employee);
+}
+// ----------------------------
+// #[derive(Debug)]
+// struct Person {
+//     age: u8,
+//     name: String,
+//     fav_color: String,
+// }
+
+// impl Person {
+//     fn print_fav_color(&self) {
+//         println!("{}", self.fav_color)
+//     }
+
+//     fn print_name(&self) {
+//         println!("{}", self.name)
+//     }
+// }
+
+// fn main() {
+//     let people = vec![
+//         Person {
+//             name: "Bob".to_owned(),
+//             age: 20,
+//             fav_color: String::from("Red"),
+//         },
+//         Person {
+//             name: "Alice".to_owned(),
+//             age: 40,
+//             fav_color: String::from("Green"),
+//         },
+//         Person {
+//             name: "Eve".to_owned(),
+//             age: 33,
+//             fav_color: String::from("Blue"),
+//         },
+//     ];
+
+//     for peep in &people {
+//         match peep.age {
+//             x if x <= 33 => {
+//                 peep.print_name();
+//                 peep.print_fav_color()
+//             }
+//             _ => {}
+//         }
+//     }
+// }
 
 // --------------------------------------
 // fn main() {
