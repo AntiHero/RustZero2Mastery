@@ -23,11 +23,29 @@ fn main() {
     // :? - debug print token
     println!("{:?}", me.position);
     println!("{:?}", me);
+
+    let mouse_model = Mouse::Model(Roccat::Kova);
+    println!("{:?}", mouse_model);
 }
 
 fn print_employee(employee: Employee) {
     println!("{:?}", employee);
 }
+
+#[derive(Debug)]
+enum Mouse {
+    LeftClick,
+    RightClick,
+    Scroll(i32),
+    Move(i32, i32),
+    Model(Roccat),
+}
+#[derive(Debug)]
+enum Roccat {
+    Kova,
+    Nova,
+}
+
 // ----------------------------
 // #[derive(Debug)]
 // struct Person {
