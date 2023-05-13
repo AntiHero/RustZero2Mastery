@@ -1,50 +1,122 @@
-// derive is a macro that can be applied to enums and structs (adds additional functionality)
-#[derive(Debug, Clone, Copy)]
-enum Position {
-    Manager,
-    Supervisor,
-    Worker,
-}
+// lesson52-----------------------
 
-#[derive(Debug, Copy, Clone)] // all fields in struct also should derive
-struct Employee {
-    position: Position,
-    work_hours: u64,
+enum Ticket {
+    Backstage(f32, String),
+    Vip(f32, String),
+    Standard(f32),
 }
 
 fn main() {
-    let me = Employee {
-        position: Position::Supervisor,
-        work_hours: 30,
-    };
+    let tickets = vec![
+        Ticket::Backstage(100.2, String::from("Bob")),
+        Ticket::Vip(50.9, String::from("Alice")),
+        Ticket::Standard(10.0),
+    ];
 
-    // no move occurs
-    print_employee(me);
-    // :? - debug print token
-    println!("{:?}", me.position);
-    println!("{:?}", me);
-
-    let mouse_model = Mouse::Model(Roccat::Kova);
-    println!("{:?}", mouse_model);
+    for ticket in &tickets {
+        match ticket {
+            Ticket::Backstage(price, name) => println!("{name} {price}"),
+            Ticket::Vip(price, name) => println!("{name} {price}"),
+            Ticket::Standard(price) => println!("{price}"),
+        }
+    }
 }
 
-fn print_employee(employee: Employee) {
-    println!("{:?}", employee);
-}
+// lesson51-----------------------
+// use std::any;
 
-#[derive(Debug)]
-enum Mouse {
-    LeftClick,
-    RightClick,
-    Scroll(i32),
-    Move(i32, i32),
-    Model(Roccat),
-}
-#[derive(Debug)]
-enum Roccat {
-    Kova,
-    Nova,
-}
+// #[derive(Debug)]
+// enum Metal {
+//     Bronze,
+//     Silver,
+//     Gold(i32),
+// }
+
+// fn main() {
+//     let metal = Metal::Bronze;
+//     let not_gold = Metal::Gold(0);
+//     let gold = Metal::Gold(375);
+
+//     match_color(metal);
+//     match_color(not_gold);
+//     match_color(gold);
+
+//     let person = Person {
+//         age: 10,
+//         name: String::from("Bob"),
+//     };
+
+//     match_struct(&person);
+// }
+
+// fn match_color(metal: Metal) {
+//     match metal {
+//         Metal::Gold(375) => println!("pure gold!"),
+//         Metal::Gold(_) => println!("gold!"),
+//         any_metal => println!("{:?} not a gold", any_metal),
+//     }
+// }
+
+// struct Person {
+//     name: String,
+//     age: u8,
+// }
+
+// fn match_struct(person: &Person) {
+//     match person {
+//         Person { age: 10, .. } => println!("{} is here!", person.name),
+//         _ => (),
+//     }
+// }
+// derive is a macro that can be applied to enums and structs (adds additional functionality)
+// #[derive(Debug, Clone, Copy)]
+// enum Position {
+//     Manager,
+//     Supervisor,
+//     Worker,
+// }
+
+// #[derive(Debug, Copy, Clone)] // all fields in struct also should derive
+// struct Employee {
+//     position: Position,
+//     work_hours: u64,
+// }
+
+// fn main() {
+//     let me = Employee {
+//         position: Position::Supervisor,
+//         work_hours: 30,
+//     };
+
+//     // no move occurs
+//     print_employee(me);
+//     // :? - debug print token
+//     println!("{:?}", me.position);
+//     println!("{:?}", me);
+
+//     let mouse_model = Mouse::Model(Roccat::Kova);
+//     println!("{:?}", mouse_model);
+
+//     let num = 3;
+// }
+
+// fn print_employee(employee: Employee) {
+//     println!("{:?}", employee);
+// }
+
+// #[derive(Debug)]
+// enum Mouse {
+//     LeftClick,
+//     RightClick,
+//     Scroll(i32),
+//     Move(i32, i32),
+//     Model(Roccat),
+// }
+// #[derive(Debug)]
+// enum Roccat {
+//     Kova,
+//     Nova,
+// }
 
 // ----------------------------
 // #[derive(Debug)]
