@@ -1,26 +1,83 @@
-// lesson52-----------------------
-
-enum Ticket {
-    Backstage(f32, String),
-    Vip(f32, String),
-    Standard(f32),
+// lesson 55-----------------
+struct Student {
+    name: String,
+    locker: Option<u32>,
 }
 
 fn main() {
-    let tickets = vec![
-        Ticket::Backstage(100.2, String::from("Bob")),
-        Ticket::Vip(50.9, String::from("Alice")),
-        Ticket::Standard(10.0),
+    let students = vec![
+        Student {
+            name: "bob".to_owned(),
+            locker: None,
+        },
+        Student {
+            name: "alice".to_owned(),
+            locker: Some(1),
+        },
+        Student {
+            name: "eve".to_owned(),
+            locker: Some(15),
+        },
     ];
 
-    for ticket in &tickets {
-        match ticket {
-            Ticket::Backstage(price, name) => println!("{name} {price}"),
-            Ticket::Vip(price, name) => println!("{name} {price}"),
-            Ticket::Standard(price) => println!("{price}"),
+    for student in &students {
+        if !student.locker.is_none() {
+            match student.locker {
+                Some(number) => println!("{} locker number is {}", student.name, number),
+                None => (),
+            }
+        } else {
+            println!("{} has no locker!", student.name)
         }
     }
 }
+
+// struct Customer {
+//     age: Option<i32>,
+//     email: String,
+// }
+
+// fn main() {
+//     let bob = Customer {
+//         age: Some(20),
+//         email: "bob@gmail.com".to_owned(),
+//     };
+
+//     let alice = Customer {
+//         age: None,
+//         email: "alice@gmail.com".to_owned(),
+//     };
+
+//     match bob.age {
+//         Some(18) => println!("Bob is 18!"),
+//         Some(age) => println!("Bob is {}", age),
+//         None => (),
+//     }
+// }
+
+// lesson52-----------------------
+
+// enum Ticket {
+//     Backstage(f32, String),
+//     Vip(f32, String),
+//     Standard(f32),
+// }
+
+// fn main() {
+//     let tickets = vec![
+//         Ticket::Backstage(100.2, String::from("Bob")),
+//         Ticket::Vip(50.9, String::from("Alice")),
+//         Ticket::Standard(10.0),
+//     ];
+
+//     for ticket in &tickets {
+//         match ticket {
+//             Ticket::Backstage(price, name) => println!("{name} {price}"),
+//             Ticket::Vip(price, name) => println!("{name} {price}"),
+//             Ticket::Standard(price) => println!("{price}"),
+//         }
+//     }
+// }
 
 // lesson51-----------------------
 // use std::any;
