@@ -1,36 +1,104 @@
-// lesson 55-----------------
-struct Student {
-    name: String,
-    locker: Option<u32>,
+// lesson 59 ----------------
+
+fn get_sound(name: &str) -> Result<SoundData, String> {
+    if name == "alert" {
+        Ok(SoundData::new("alert"))
+    } else {
+        Err("unable to find sounda data".to_owned())
+    }
 }
 
-fn main() {
-    let students = vec![
-        Student {
-            name: "bob".to_owned(),
-            locker: None,
-        },
-        Student {
-            name: "alice".to_owned(),
-            locker: Some(1),
-        },
-        Student {
-            name: "eve".to_owned(),
-            locker: Some(15),
-        },
-    ];
+#[derive(Debug)]
+struct SoundData {
+    sound: String,
+}
 
-    for student in &students {
-        if !student.locker.is_none() {
-            match student.locker {
-                Some(number) => println!("{} locker number is {}", student.name, number),
-                None => (),
-            }
-        } else {
-            println!("{} has no locker!", student.name)
+impl SoundData {
+    fn new(str: &str) -> Self {
+        SoundData {
+            sound: str.to_owned(),
         }
     }
 }
+
+fn main() {
+    let first_sound_result = get_sound("woof");
+    let second_sound_result = get_sound("alert");
+
+    println!("{:?}", first_sound_result);
+    println!("{:?}", second_sound_result);
+
+    let sound = get_sound("alert");
+
+    let sound_data = SoundData {
+        sound: "alert".to_owned(),
+    };
+
+    match sound {
+        Ok(sound_data) => println!("Sound data is alert"),
+        Err(e) => println!("{e}"),
+    }
+}
+
+// lesson 58 ----------------
+
+// fn main() {
+//     print_lowercase("HELLO WORLD");
+//     print_uppercase("hello world");
+// }
+
+// fn print_lowercase(str: &str) {
+//     println!("{}", str.to_lowercase());
+// }
+
+// fn print_uppercase(str: &str) {
+//     println!("{}", str.to_uppercase());
+// }
+
+// lesson 57 ----------------
+// fn main() {
+//     let vector: Vec<i32> = vec![];
+
+//     match vector.is_empty() {
+//         true => println!("is empty"),
+//         false => println!("not empty"),
+//     }
+// }
+
+// lesson 55-----------------
+// struct Student {
+//     name: String,
+//     locker: Option<u32>,
+// }
+
+// /// Displays the message based on whether the student has a locker or not
+// fn main() {
+//     let students = vec![
+//         Student {
+//             name: "bob".to_owned(),
+//             locker: None,
+//         },
+//         Student {
+//             name: "alice".to_owned(),
+//             locker: Some(1),
+//         },
+//         Student {
+//             name: "eve".to_owned(),
+//             locker: Some(15),
+//         },
+//     ];
+
+//     for student in &students {
+//         if !student.locker.is_none() {
+//             match student.locker {
+//                 Some(number) => println!("{} locker number is {}", student.name, number),
+//                 None => (),
+//             }
+//         } else {
+//             println!("{} has no locker!", student.name)
+//         }
+//     }
+// }
 
 // struct Customer {
 //     age: Option<i32>,
