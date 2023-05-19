@@ -1,44 +1,135 @@
-// lesson 59 ----------------
-
-fn get_sound(name: &str) -> Result<SoundData, String> {
-    if name == "alert" {
-        Ok(SoundData::new("alert"))
-    } else {
-        Err("unable to find sounda data".to_owned())
-    }
+// lesson 62
+enum EmployeeType {
+    Maintaince,
+    Marketing,
+    Manager,
+    LineSuperior,
+    Kitchen,
+    Assembly,
 }
 
-#[derive(Debug)]
-struct SoundData {
-    sound: String,
+struct Employee {
+    employee_type: EmployeeType,
+    works: bool,
 }
 
-impl SoundData {
-    fn new(str: &str) -> Self {
-        SoundData {
-            sound: str.to_owned(),
+fn check_access(employee: &Employee) -> Result<bool, String> {
+    match employee.employee_type {
+        EmployeeType::Assembly | EmployeeType::Marketing | EmployeeType::Manager
+            if employee.works == true =>
+        {
+            Ok(true)
         }
+        _ => Err("Forbidden".to_owned()),
     }
 }
 
-fn main() {
-    let first_sound_result = get_sound("woof");
-    let second_sound_result = get_sound("alert");
-
-    println!("{:?}", first_sound_result);
-    println!("{:?}", second_sound_result);
-
-    let sound = get_sound("alert");
-
-    let sound_data = SoundData {
-        sound: "alert".to_owned(),
+fn main() -> Result<(), String> {
+    let empl1 = Employee {
+        employee_type: EmployeeType::LineSuperior,
+        works: false,
     };
 
-    match sound {
-        Ok(sound_data) => println!("Sound data is alert"),
-        Err(e) => println!("{e}"),
-    }
+    let empl2 = Employee {
+        employee_type: EmployeeType::Manager,
+        works: true,
+    };
+
+    let empl3 = Employee {
+        employee_type: EmployeeType::Kitchen,
+        works: true,
+    };
+
+    let result2 = check_access(&empl2)?;
+    println!("{result2}");
+    let result3 = check_access(&empl3)?;
+    println!("{result3}");
+    let result1 = check_access(&empl1)?;
+    println!("{result1}");
+
+    Ok(())
 }
+
+// lesson 61
+// struct Customer {
+//     age: u32,
+//     name: String,
+// }
+
+// fn check_purchuase(customer: &Customer) -> Result<bool, String> {
+//     match customer.age {
+//         age if age < 18 => Err(format!("{} is too young", age)),
+//         age => Ok(true),
+//     }
+// }
+
+// fn run_check(customer: &Customer) -> Result<(), String> {
+//     let result = check_purchuase(&customer)?;
+//     println!("{}", result);
+
+//     Ok(())
+// }
+
+// fn main() {
+//     let user1 = Customer {
+//         name: String::from("Bob"),
+//         age: 20,
+//     };
+
+//     let user2 = Customer {
+//         name: String::from("Eve"),
+//         age: 17,
+//     };
+
+//     // println!("{:?}", check_purchuase(&user1));
+//     // println!("{:?}", check_purchuase(&user2));
+
+//     run_check(&user1);
+//     let error = run_check(&user2);
+//     println!("{:?}", error);
+// }
+
+// lesson 59 ----------------
+
+// fn get_sound(name: &str) -> Result<SoundData, String> {
+//     if name == "alert" {
+//         Ok(SoundData::new("alert"))
+//     } else {
+//         Err("unable to find sounda data".to_owned())
+//     }
+// }
+
+// #[derive(Debug)]
+// struct SoundData {
+//     sound: String,
+// }
+
+// impl SoundData {
+//     fn new(str: &str) -> Self {
+//         SoundData {
+//             sound: str.to_owned(),
+//         }
+//     }
+// }
+
+// fn main() {
+//     let first_sound_result = get_sound("woof");
+//     let second_sound_result = get_sound("alert");
+
+//     println!("{:?}", first_sound_result);
+//     println!("{:?}", second_sound_result);
+
+//     let sound = get_sound("alert");
+
+//     let sound_data = SoundData {
+//         sound: "alert".to_owned(),
+//     };
+
+//     match sound {
+//         Ok(sound_data) => println!("Sound data is alert"),
+//         Err(e) => println!("{e}"),
+//     }
+// }
 
 // lesson 58 ----------------
 
