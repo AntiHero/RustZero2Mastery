@@ -1,54 +1,105 @@
-// lesson 62
-enum EmployeeType {
-    Maintaince,
-    Marketing,
-    Manager,
-    LineSuperior,
-    Kitchen,
-    Assembly,
+// lesson 65
+use std::collections::HashMap;
+
+#[derive(Hash, PartialEq, Eq, Debug)]
+enum Furniture {
+    Chair,
+    Bed,
+    Table,
+    Couche,
 }
 
-struct Employee {
-    employee_type: EmployeeType,
-    works: bool,
+struct Item {
+    amount: Option<u32>,
+    name: Furniture,
 }
 
-fn check_access(employee: &Employee) -> Result<bool, String> {
-    match employee.employee_type {
-        EmployeeType::Assembly | EmployeeType::Marketing | EmployeeType::Manager
-            if employee.works == true =>
-        {
-            Ok(true)
+fn main() {
+    let mut store = HashMap::new();
+
+    let chair = Item {
+        name: Furniture::Chair,
+        amount: Some(5),
+    };
+    let bed = Item {
+        name: Furniture::Bed,
+        amount: Some(3),
+    };
+
+    let table = Item {
+        name: Furniture::Table,
+        amount: Some(2),
+    };
+
+    let couche = Item {
+        name: Furniture::Couche,
+        amount: None,
+    };
+
+    store.insert(chair.name, chair.amount);
+    store.insert(bed.name, bed.amount);
+    store.insert(table.name, table.amount);
+    store.insert(couche.name, couche.amount);
+
+    // iter here doesn't move
+    for (key, value) in store.iter() {
+        match value {
+            Some(x) => println!("Theare are {x} {:?} in the store", key),
+            None => println!("{:?} out of stock", key),
         }
-        _ => Err("Forbidden".to_owned()),
     }
 }
+// lesson 62
+// enum EmployeeType {
+//     Maintaince,
+//     Marketing,
+//     Manager,
+//     LineSuperior,
+//     Kitchen,
+//     Assembly,
+// }
 
-fn main() -> Result<(), String> {
-    let empl1 = Employee {
-        employee_type: EmployeeType::LineSuperior,
-        works: false,
-    };
+// struct Employee {
+//     employee_type: EmployeeType,
+//     works: bool,
+// }
 
-    let empl2 = Employee {
-        employee_type: EmployeeType::Manager,
-        works: true,
-    };
+// fn check_access(employee: &Employee) -> Result<bool, String> {
+//     match employee.employee_type {
+//         EmployeeType::Assembly | EmployeeType::Marketing | EmployeeType::Manager
+//             if employee.works == true =>
+//         {
+//             Ok(true)
+//         }
+//         _ => Err("Forbidden".to_owned()),
+//     }
+// }
 
-    let empl3 = Employee {
-        employee_type: EmployeeType::Kitchen,
-        works: true,
-    };
+// fn main() -> Result<(), String> {
+//     let empl1 = Employee {
+//         employee_type: EmployeeType::LineSuperior,
+//         works: false,
+//     };
 
-    let result2 = check_access(&empl2)?;
-    println!("{result2}");
-    let result3 = check_access(&empl3)?;
-    println!("{result3}");
-    let result1 = check_access(&empl1)?;
-    println!("{result1}");
+//     let empl2 = Employee {
+//         employee_type: EmployeeType::Manager,
+//         works: true,
+//     };
 
-    Ok(())
-}
+//     let empl3 = Employee {
+//         employee_type: EmployeeType::Kitchen,
+//         works: true,
+//     };
+
+//     let result2 = check_access(&empl2)?;
+//     println!("{result2}");
+//     let result3 = check_access(&empl3)?;
+//     println!("{result3}");
+//     let result1 = check_access(&empl1)?;
+//     println!("{result1}");
+
+//     Ok(())
+// }
 
 // lesson 61
 // struct Customer {
