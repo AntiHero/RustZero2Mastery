@@ -1,54 +1,60 @@
-// lesson 65
-use std::collections::HashMap;
-
-#[derive(Hash, PartialEq, Eq, Debug)]
-enum Furniture {
-    Chair,
-    Bed,
-    Table,
-    Couche,
-}
-
-struct Item {
-    amount: Option<u32>,
-    name: Furniture,
-}
-
+// lesson 66
 fn main() {
-    let mut store = HashMap::new();
+    let add = |a, b| a + b;
 
-    let chair = Item {
-        name: Furniture::Chair,
-        amount: Some(5),
-    };
-    let bed = Item {
-        name: Furniture::Bed,
-        amount: Some(3),
-    };
-
-    let table = Item {
-        name: Furniture::Table,
-        amount: Some(2),
-    };
-
-    let couche = Item {
-        name: Furniture::Couche,
-        amount: None,
-    };
-
-    store.insert(chair.name, chair.amount);
-    store.insert(bed.name, bed.amount);
-    store.insert(table.name, table.amount);
-    store.insert(couche.name, couche.amount);
-
-    // iter here doesn't move
-    for (key, value) in store.iter() {
-        match value {
-            Some(x) => println!("Theare are {x} {:?} in the store", key),
-            None => println!("{:?} out of stock", key),
-        }
-    }
+    println!("{}", add(1, 2));
 }
+// lesson 65
+// use std::collections::HashMap;
+
+// #[derive(Hash, PartialEq, Eq, Debug)]
+// enum Furniture {
+//     Chair,
+//     Bed,
+//     Table,
+//     Couche,
+// }
+
+// struct Item {
+//     amount: Option<u32>,
+//     name: Furniture,
+// }
+
+// fn main() {
+//     let mut store = HashMap::new();
+
+//     let chair = Item {
+//         name: Furniture::Chair,
+//         amount: Some(5),
+//     };
+//     let bed = Item {
+//         name: Furniture::Bed,
+//         amount: Some(3),
+//     };
+
+//     let table = Item {
+//         name: Furniture::Table,
+//         amount: Some(2),
+//     };
+
+//     let couche = Item {
+//         name: Furniture::Couche,
+//         amount: None,
+//     };
+
+//     store.insert(chair.name, chair.amount);
+//     store.insert(bed.name, bed.amount);
+//     store.insert(table.name, table.amount);
+//     store.insert(couche.name, couche.amount);
+
+//     // iter here doesn't move
+//     for (key, value) in store.iter() {
+//         match value {
+//             Some(x) => println!("Theare are {x} {:?} in the store", key),
+//             None => println!("{:?} out of stock", key),
+//         }
+//     }
+// }
 // lesson 62
 // enum EmployeeType {
 //     Maintaince,
