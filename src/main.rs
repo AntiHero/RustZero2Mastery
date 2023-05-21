@@ -1,9 +1,49 @@
-// lesson 66
-fn main() {
-    let add = |a, b| a + b;
-
-    println!("{}", add(1, 2));
+// lesson 68
+#[derive(Debug)]
+struct User {
+    user_id: i32,
+    name: String,
 }
+
+fn find_user(name: &str) -> Option<i32> {
+    let name = name.to_lowercase();
+
+    match name.as_str() {
+        "sam" => Some(1),
+        "matt" => Some(5),
+        "katie" => Some(9),
+        _ => None,
+    }
+}
+
+fn create_user(user_name: &str) -> Option<User> {
+    find_user(user_name).map(|id| User {
+        user_id: id,
+        name: user_name.to_owned(),
+    })
+}
+fn main() {
+    let user = create_user("sam");
+
+    match user {
+        Some(user) => println!("{:?}", user),
+        None => println!("user not found"),
+    }
+
+    let user = create_user("bob");
+
+    match user {
+        Some(user) => println!("{:?}", user),
+        None => println!("user not found"),
+    }
+}
+// lesson 66
+// fn main() {
+//     let add = |a, b| a + b;
+
+//     let del = |a: i32, b: i32| -> i32 { a + b };
+//     println!("{}", add(1, 2));
+// }
 // lesson 65
 // use std::collections::HashMap;
 
