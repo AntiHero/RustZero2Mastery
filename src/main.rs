@@ -1,42 +1,94 @@
-// lesson 68
-#[derive(Debug)]
-struct User {
-    user_id: i32,
-    name: String,
-}
-
-fn find_user(name: &str) -> Option<i32> {
-    let name = name.to_lowercase();
-
-    match name.as_str() {
-        "sam" => Some(1),
-        "matt" => Some(5),
-        "katie" => Some(9),
-        _ => None,
-    }
-}
-
-fn create_user(user_name: &str) -> Option<User> {
-    find_user(user_name).map(|id| User {
-        user_id: id,
-        name: user_name.to_owned(),
-    })
-}
+// lesson 71
 fn main() {
-    let user = create_user("sam");
+    let numbers = vec![1, 2, 3, 4, 5];
 
-    match user {
-        Some(user) => println!("{:?}", user),
-        None => println!("user not found"),
+    let numbers = numbers
+        .iter()
+        .map(|num| num + 1)
+        .filter(|num| num & 1 == 0)
+        .collect::<Vec<i32>>();
+
+    let find_me = numbers.iter().find(|&num| num == &4);
+
+    match find_me {
+        Some(_) => println!("Found"),
+        None => println!("Not found"),
     }
 
-    let user = create_user("bob");
+    let slice = numbers.iter().take(3).collect::<Vec<&i32>>();
 
-    match user {
-        Some(user) => println!("{:?}", user),
-        None => println!("user not found"),
-    }
+    println!("{:?}", slice);
 }
+// lesson 70
+// enum Access {
+//     Admin,
+//     User,
+//     Guest,
+// }
+
+// fn maybe_access(name: &str) -> Option<Access> {
+//     match name {
+//         "admin" => Some(Access::Admin),
+//         "gary" => Some(Access::User),
+//         _ => None,
+//     }
+// }
+
+// fn root() -> Option<Access> {
+//     Some(Access::Admin)
+// }
+
+// fn part_1() -> bool {
+//     maybe_access("admin").is_some()
+// }
+
+// fn part_2() -> Option<Access> {
+//     maybe_access("root").or_else(root)
+// }
+
+// fn part_3() -> Access {
+//     maybe_access("Alice").unwrap_or_else(|| Access::Guest)
+// }
+// fn main() {}
+// lesson 68
+// #[derive(Debug)]
+// struct User {
+//     user_id: i32,
+//     name: String,
+// }
+
+// fn find_user(name: &str) -> Option<i32> {
+//     let name = name.to_lowercase();
+
+//     match name.as_str() {
+//         "sam" => Some(1),
+//         "matt" => Some(5),
+//         "katie" => Some(9),
+//         _ => None,
+//     }
+// }
+
+// fn create_user(user_name: &str) -> Option<User> {
+//     find_user(user_name).map(|id| User {
+//         user_id: id,
+//         name: user_name.to_owned(),
+//     })
+// }
+// fn main() {
+//     let user = create_user("sam");
+
+//     match user {
+//         Some(user) => println!("{:?}", user),
+//         None => println!("user not found"),
+//     }
+
+//     let user = create_user("bob");
+
+//     match user {
+//         Some(user) => println!("{:?}", user),
+//         None => println!("user not found"),
+//     }
+// }
 // lesson 66
 // fn main() {
 //     let add = |a, b| a + b;
