@@ -1,17 +1,83 @@
-// lesson 72
-fn main() {
-    let data = vec![1, 2, 3, 4, 5];
-
-    let data = data
-        .iter()
-        .map(|num| num * 3)
-        .filter(|num| num > &10)
-        .collect::<Vec<i32>>();
-
-    for num in &data {
-        println!("{num}");
+// lesson 76
+// doesn't work in module
+use std::collections::HashMap;
+// behaves like individual file, to use std we should directly define it in mod itself
+// groups functionaltiy
+mod math {
+    use std::collections::HashMap;
+    pub fn add(a: i32, b: i32) -> i32 {
+        a + b
     }
 }
+fn main() {
+    use math::*;
+    let res = add(2, 4);
+    println!("{res}");
+    let res = math::add(1, 2);
+    println!("{res}");
+    use math::add;
+}
+// lesson 75
+// fn main() {
+//     let mut data = Some(3);
+
+//     // suitable for working with iterators
+//     while let Some(i) = data {
+//         println!("looping loop {i}");
+//         data = None;
+//     }
+
+//     println!("done");
+
+//     let vector = vec![1, 2, 3, 4, 5];
+//     let mut iterator = vector.iter();
+
+//     while let Some(i) = iterator.next() {
+//         println!("num {:?}", i);
+//     }
+// }
+// lesson 74
+// fn main() {
+//     let maybe_user = Some("Jerry");
+
+//     match maybe_user {
+//         Some(user) => println!("{user}"),
+//         _ => println!("Not a user"),
+//     }
+
+//     // is equivalent to (when we don't care about None value)
+
+//     // helpts to handle Option type
+//     if let Some(user) = maybe_user {
+//         println!("{user}");
+//     }
+// }
+// lesson 73
+// fn main() {
+//     let range = 1..9;
+
+//     for i in range {
+//         println!("{i}");
+//     }
+
+//     for ch in 'a'..'d' {
+//         println!("{ch}");
+//     }
+// }
+// lesson 72
+// fn main() {
+//     let data = vec![1, 2, 3, 4, 5];
+
+//     let data = data
+//         .iter()
+//         .map(|num| num * 3)
+//         .filter(|num| num > &10)
+//         .collect::<Vec<i32>>();
+
+//     for num in &data {
+//         println!("{num}");
+//     }
+// }
 // lesson 71
 // fn main() {
 //     let numbers = vec![1, 2, 3, 4, 5];
