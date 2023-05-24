@@ -1,24 +1,38 @@
-// lesson 71
+// lesson 72
 fn main() {
-    let numbers = vec![1, 2, 3, 4, 5];
+    let data = vec![1, 2, 3, 4, 5];
 
-    let numbers = numbers
+    let data = data
         .iter()
-        .map(|num| num + 1)
-        .filter(|num| num & 1 == 0)
+        .map(|num| num * 3)
+        .filter(|num| num > &10)
         .collect::<Vec<i32>>();
 
-    let find_me = numbers.iter().find(|&num| num == &4);
-
-    match find_me {
-        Some(_) => println!("Found"),
-        None => println!("Not found"),
+    for num in &data {
+        println!("{num}");
     }
-
-    let slice = numbers.iter().take(3).collect::<Vec<&i32>>();
-
-    println!("{:?}", slice);
 }
+// lesson 71
+// fn main() {
+//     let numbers = vec![1, 2, 3, 4, 5];
+
+//     let numbers = numbers
+//         .iter()
+//         .map(|num| num + 1)
+//         .filter(|num| num & 1 == 0)
+//         .collect::<Vec<i32>>();
+
+//     let find_me = numbers.iter().find(|&num| num == &4);
+
+//     match find_me {
+//         Some(_) => println!("Found"),
+//         None => println!("Not found"),
+//     }
+
+//     let slice = numbers.iter().take(3).collect::<Vec<&i32>>();
+
+//     println!("{:?}", slice);
+// }
 // lesson 70
 // enum Access {
 //     Admin,
