@@ -1,22 +1,41 @@
+// lesson 77
+// mod msg {
+//     pub fn trim(msg: &str) -> &str {
+//         msg.trim()
+//     }
+
+//     pub fn capitalize(msg: &str) -> String {
+//         msg.to_uppercase()
+//     }
+// }
+// fn main() {
+// use msg::{capitalize, trim};
+
+// let result = trim("    hello     ");
+// println!("{result}");
+
+//     let result = msg::capitalize(result);
+//     println!("{result}");
+// }
 // lesson 76
 // doesn't work in module
-use std::collections::HashMap;
+// use std::collections::HashMap;
 // behaves like individual file, to use std we should directly define it in mod itself
 // groups functionaltiy
-mod math {
-    use std::collections::HashMap;
-    pub fn add(a: i32, b: i32) -> i32 {
-        a + b
-    }
-}
-fn main() {
-    use math::*;
-    let res = add(2, 4);
-    println!("{res}");
-    let res = math::add(1, 2);
-    println!("{res}");
-    use math::add;
-}
+// mod math {
+//     use std::collections::HashMap;
+//     pub fn add(a: i32, b: i32) -> i32 {
+//         a + b
+//     }
+// }
+// fn main() {
+//     use math::*;
+//     let res = add(2, 4);
+//     println!("{res}");
+//     let res = math::add(1, 2);
+//     println!("{res}");
+//     use math::add;
+// }
 // lesson 75
 // fn main() {
 //     let mut data = Some(3);
