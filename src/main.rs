@@ -1,10 +1,17 @@
-// lesson 81
-use chrono::prelude::*;
-
+// lesson 83
+use trim::utils::trim;
 fn main() {
-    let utc: DateTime<Utc> = Utc::now();
-    println!("{:?}", utc);
+    let str = " hello, Johnny!  ";
+    println!("{}", trim(str));
 }
+// 82 IMPORTANT INFO ABOUT MODULES
+// lesson 81
+// use chrono::prelude::*;
+
+// fn main() {
+//     let utc: DateTime<Utc> = Utc::now();
+//     println!("{:?}", utc);
+// }
 // lesson 80
 // use humantime::format_duration;
 // use std::time::Duration;
