@@ -1,3 +1,89 @@
+// lesson 81
+use chrono::prelude::*;
+
+fn main() {
+    let utc: DateTime<Utc> = Utc::now();
+    println!("{:?}", utc);
+}
+// lesson 80
+// use humantime::format_duration;
+// use std::time::Duration;
+
+// fn main() {
+//     let duration = Duration::from_secs(6000);
+//     let duration = format_duration(duration);
+//     println!("{duration}");
+// }
+// lesson 79
+// fn clamp(n: i32, lower: i32, upper: i32) -> i32 {
+//     if n < lower {
+//         lower
+//     } else if n > upper {
+//         upper
+//     } else {
+//         n
+//     }
+// }
+
+// fn div(a: i32, b: i32) -> Option<i32> {
+//     Some(a / b)
+// }
+
+// fn concat(first: &str, second: &str) -> String {
+//     format!("{} {}", first, second)
+// }
+
+// fn main() {}
+
+// #[test]
+// fn check_clamp() {
+//     assert_eq!(clamp(10, 9, 11), 10);
+//     assert_eq!(clamp(9, 10, 11), 10);
+//     assert_eq!(clamp(9, 7, 8), 8);
+// }
+
+// #[test]
+// fn check_div() {
+//     assert_eq!(div(4, 2), Some(2));
+//     assert_eq!(div(1, 2), Some(0));
+//     assert_eq!(div(1, 1), Some(1));
+// }
+
+// #[test]
+// fn check_concat() {
+//     assert_eq!(concat("hello", "world"), String::from("hello world"));
+// }
+// lesson 78
+// fn all_claps(word: &str) -> String {
+//     word.to_uppercase()
+// }
+
+// fn main() {}
+
+// #[cfg(test)] // cfg short for configuration, test - in test scenarios
+// this will be only complied when testing code
+// mod test {
+//     use crate::all_claps;
+//     #[test]
+//     fn check_call_caps() {
+//         /*
+//          * @arg - value to be checked
+//          * @arg - value that is expected
+//          * @arg - error message
+//          */
+//         assert_eq!(
+//             all_claps("hello"),
+//             String::from("HELLO"),
+//             "string should be uppercase"
+//         );
+
+//         assert_eq!(
+//             all_claps("hello"),
+//             String::from("HELLo"),
+//             "string should be uppercase"
+//         );
+//     }
+// }
 // lesson 77
 // mod msg {
 //     pub fn trim(msg: &str) -> &str {
