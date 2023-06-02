@@ -1,9 +1,39 @@
-// lesson 83
-use trim::utils::trim;
-fn main() {
-    let str = " hello, Johnny!  ";
-    println!("{}", trim(str));
+// lesson 84
+use std::io;
+
+fn get_input() -> io::Result<String> {
+    // creawteing a buffer
+    let mut buf = String::new();
+
+    io::stdin().read_line(&mut buf)?;
+
+    Ok(buf.trim().to_owned())
 }
+
+fn main() {
+    let mut all_input = vec![];
+    let mut times_input = 0;
+
+    while times_input < 2 {
+        match get_input() {
+            Ok(string) => {
+                all_input.push(string);
+                times_input += 1
+            }
+            Err(err) => println!("{err}"),
+        }
+    }
+
+    for input in all_input {
+        println!("{input}");
+    }
+}
+// lesson 83
+// use trim::utils::trim;
+// fn main() {
+//     let str = " hello, Johnny!  ";
+//     println!("{}", trim(str));
+// }
 // 82 IMPORTANT INFO ABOUT MODULES
 // lesson 81
 // use chrono::prelude::*;
