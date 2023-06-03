@@ -1,33 +1,69 @@
-// lesson 84
+// lesson 85
 use std::io;
 
-fn get_input() -> io::Result<String> {
-    // creawteing a buffer
-    let mut buf = String::new();
+#[derive(Debug)]
+enum PowerOptions {
+    Off,
+    Sleep,
+    Reboot,
+    Shutdown,
+    Hibernate,
+}
 
-    io::stdin().read_line(&mut buf)?;
-
-    Ok(buf.trim().to_owned())
+fn get_power_option(str: &str) -> Option<PowerOptions> {
+    match str {
+        "off" => Some(PowerOptions::Off),
+        "sleep" => Some(PowerOptions::Sleep),
+        "reboot" => Some(PowerOptions::Reboot),
+        "shutdown" => Some(PowerOptions::Shutdown),
+        "hibernate" => Some(PowerOptions::Hibernate),
+        _ => None,
+    }
 }
 
 fn main() {
-    let mut all_input = vec![];
-    let mut times_input = 0;
+    let mut buf = String::new();
+    io::stdin()
+        .read_line(&mut buf)
+        .expect("Something went wrong");
 
-    while times_input < 2 {
-        match get_input() {
-            Ok(string) => {
-                all_input.push(string);
-                times_input += 1
-            }
-            Err(err) => println!("{err}"),
-        }
-    }
+    let buf = buf.trim().to_lowercase();
 
-    for input in all_input {
-        println!("{input}");
+    match get_power_option(buf.as_str()) {
+        Some(result) => println!("{:?}", result),
+        None => println!("Error!"),
     }
 }
+// lesson 84
+// use std::io;
+
+// fn get_input() -> io::Result<String> {
+//     // creawteing a buffer
+//     let mut buf = String::new();
+
+//     io::stdin().read_line(&mut buf)?;
+
+//     Ok(buf.trim().to_owned())
+// }
+
+// fn main() {
+//     let mut all_input = vec![];
+//     let mut times_input = 0;
+
+//     while times_input < 2 {
+//         match get_input() {
+//             Ok(string) => {
+//                 all_input.push(string);
+//                 times_input += 1
+//             }
+//             Err(err) => println!("{err}"),
+//         }
+//     }
+
+//     for input in all_input {
+//         println!("{input}");
+//     }
+// }
 // lesson 83
 // use trim::utils::trim;
 // fn main() {
