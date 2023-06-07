@@ -39,7 +39,7 @@ fn main() {
             println!("Such option is not available");
         }
         Err(_) => {
-            println!("Something went wrong");
+            println!("Bad input");
         }
     };
 }
