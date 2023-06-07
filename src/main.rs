@@ -36,7 +36,7 @@ fn main() {
             bill_total();
         }
         Ok(_) => {
-            println!("Such options is not available");
+            println!("Such option is not available");
         }
         Err(_) => {
             println!("Something went wrong");
