@@ -1,4 +1,7 @@
 // lesson 86
+
+use bill::add_bill;
+
 fn get_stage() -> std::io::Result<String> {
     use ::std::io;
 
@@ -9,7 +12,37 @@ fn get_stage() -> std::io::Result<String> {
     return Ok(buf);
 }
 
-fn main() {}
+mod bill;
+
+fn main() {
+    use bill::*;
+
+    let str = String::from("1");
+
+    match get_stage().as_deref() {
+        Ok("1") => {
+            add_bill();
+        }
+        Ok("2") => {
+            view_bill();
+        }
+        Ok("3") => {
+            remove_bill();
+        }
+        Ok("4") => {
+            update_bill();
+        }
+        Ok("5") => {
+            bill_total();
+        }
+        Ok(_) => {
+            println!("Such options is not available");
+        }
+        Err(_) => {
+            println!("Something went wrong");
+        }
+    };
+}
 // lesson 85
 // use std::io;
 
