@@ -1,39 +1,51 @@
-// lesson 85
-use std::io;
+// lesson 86
+fn get_stage() -> std::io::Result<String> {
+    use ::std::io;
 
-#[derive(Debug)]
-enum PowerOptions {
-    Off,
-    Sleep,
-    Reboot,
-    Shutdown,
-    Hibernate,
-}
-
-fn get_power_option(str: &str) -> Option<PowerOptions> {
-    match str {
-        "off" => Some(PowerOptions::Off),
-        "sleep" => Some(PowerOptions::Sleep),
-        "reboot" => Some(PowerOptions::Reboot),
-        "shutdown" => Some(PowerOptions::Shutdown),
-        "hibernate" => Some(PowerOptions::Hibernate),
-        _ => None,
-    }
-}
-
-fn main() {
     let mut buf = String::new();
-    io::stdin()
-        .read_line(&mut buf)
-        .expect("Something went wrong");
 
-    let buf = buf.trim().to_lowercase();
+    io::stdin().read_line(&mut buf)?;
 
-    match get_power_option(buf.as_str()) {
-        Some(result) => println!("{:?}", result),
-        None => println!("Error!"),
-    }
+    return Ok(buf);
 }
+
+fn main() {}
+// lesson 85
+// use std::io;
+
+// #[derive(Debug)]
+// enum PowerOptions {
+//     Off,
+//     Sleep,
+//     Reboot,
+//     Shutdown,
+//     Hibernate,
+// }
+
+// fn get_power_option(str: &str) -> Option<PowerOptions> {
+//     match str {
+//         "off" => Some(PowerOptions::Off),
+//         "sleep" => Some(PowerOptions::Sleep),
+//         "reboot" => Some(PowerOptions::Reboot),
+//         "shutdown" => Some(PowerOptions::Shutdown),
+//         "hibernate" => Some(PowerOptions::Hibernate),
+//         _ => None,
+//     }
+// }
+
+// fn main() {
+//     let mut buf = String::new();
+//     io::stdin()
+//         .read_line(&mut buf)
+//         .expect("Something went wrong");
+
+//     let buf = buf.trim().to_lowercase();
+
+//     match get_power_option(buf.as_str()) {
+//         Some(result) => println!("{:?}", result),
+//         None => println!("Error!"),
+//     }
+// }
 // lesson 84
 // use std::io;
 
