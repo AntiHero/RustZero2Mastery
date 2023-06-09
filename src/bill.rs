@@ -1,9 +1,11 @@
-pub fn add_bill() {}
+#[derive(Debug)]
+pub struct Bill {
+    pub name: Option<String>,
+    pub amount: f32,
+}
 
-pub fn view_bill() {}
-
-pub fn remove_bill() {}
-
-pub fn update_bill() {}
-
-pub fn bill_total() {}
+impl Bill {
+    pub fn new(name: Option<String>, amount: f32) -> Self {
+        Bill { name, amount }
+    }
+}

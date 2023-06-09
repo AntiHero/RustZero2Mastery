@@ -1,47 +1,121 @@
 // lesson 86
 
-use bill::add_bill;
-
-fn get_stage() -> std::io::Result<String> {
-    use ::std::io;
-
-    let mut buf = String::new();
-
-    io::stdin().read_line(&mut buf)?;
-
-    return Ok(buf);
-}
-
 mod bill;
+mod utils;
+
+fn print_menu() {
+    const HELP: &str = r#"
+    == Manage Bills ==
+    1. Add bill
+    2. View bills
+    3. Remove bills
+    4. Update bills
+    5. Bill total
+
+    Enter selection:
+    "#;
+    println!("{HELP}");
+}
 
 fn main() {
     use bill::*;
+    use utils::*;
 
-    let str = String::from("1");
+    print_menu();
 
-    match get_stage().as_deref() {
-        Ok("1") => {
-            add_bill();
-        }
-        Ok("2") => {
-            view_bill();
-        }
-        Ok("3") => {
-            remove_bill();
-        }
-        Ok("4") => {
-            update_bill();
-        }
-        Ok("5") => {
-            bill_total();
-        }
-        Ok(_) => {
-            println!("Such option is not available");
-        }
-        Err(_) => {
-            println!("Bad input");
-        }
-    };
+    use std::collections::HashMap;
+
+    let mut bills: HashMap<u32, Bill> = HashMap::new();
+    let mut idx: u32 = 1;
+
+    loop {
+        match get_input().as_deref() {
+            Ok("1") => {
+                println!("name: ");
+
+                let name = match get_input() {
+                    Ok(name) => Some(name),
+                    Err(_) => None,
+                };
+
+                println!("amount: ");
+
+                let amount = match get_input() {
+                    Ok(amount) => amount.parse::<f32>().unwrap(),
+                    Err(_) => 0.0,
+                };
+
+                let bill = Bill::new(name, amount);
+                bills.insert(idx, bill);
+
+                idx += 1;
+
+                println!("success");
+            }
+            Ok("2") => {
+                for (key, value) in bills.iter() {
+                    println!(
+                        "{key}: name {:?}, amount {:?}",
+                        value.name.as_ref().unwrap(),
+                        value.amount
+                    )
+                }
+            }
+            Ok("3") => {
+                println!("bill index");
+
+                let num = match get_input().unwrap().parse::<u32>() {
+                    Ok(num) => num,
+                    Err(_) => 0,
+                };
+
+                if num == 0 {
+                    println!("no bill was found");
+                }
+
+                bills.remove(&num);
+            }
+            Ok("4") => {
+                println!("bill index");
+
+                let num = match get_input().unwrap().parse::<u32>() {
+                    Ok(num) => num,
+                    Err(_) => 0,
+                };
+
+                println!("name: ");
+
+                let name = match get_input() {
+                    Ok(name) => Some(name),
+                    Err(_) => None,
+                };
+
+                println!("amount: ");
+
+                let amount = match get_input() {
+                    Ok(amount) => amount.parse::<f32>().unwrap(),
+                    Err(_) => 0.0,
+                };
+
+                bills.insert(num, Bill { name, amount });
+            }
+            Ok("5") => {
+                let mut total: f32 = 0.0;
+
+                for (_, bill) in bills.iter() {
+                    total += bill.amount;
+                }
+
+                println!("{total}");
+            }
+            Ok(_) => {
+                println!("such option is not available");
+            }
+            Err(_) => {
+                println!("bad input");
+            }
+        };
+    }
 }
 // lesson 85
 // use std::io;
