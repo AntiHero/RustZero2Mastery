@@ -4,7 +4,7 @@ mod bill;
 mod utils;
 
 fn print_menu() {
-    const HELP: &str = r#"
+    const MENU: &str = r#"
     == Manage Bills ==
     1. Add bill
     2. View bills
@@ -14,7 +14,22 @@ fn print_menu() {
 
     Enter selection:
     "#;
-    println!("{HELP}");
+    println!("{MENU}");
+}
+
+enum MainMenu {
+    AddBill,
+    ViewBill,
+}
+
+impl MainMenu {
+    fn from_str(str: &str) -> Option<MainMenu> {
+        match str {
+            "1" => Some(Self::AddBill),
+            "2" => Some(Self::ViewBill),
+            _ => None,
+        }
+    }
 }
 
 fn main() {
@@ -26,95 +41,101 @@ fn main() {
     use std::collections::HashMap;
 
     let mut bills: HashMap<u32, Bill> = HashMap::new();
-    let mut idx: u32 = 1;
+    // let mut idx: u32 = 1;
 
     loop {
-        match get_input().as_deref() {
-            Some("1") => {
-                println!("name: ");
+        let input = get_input().expect("no data entered");
 
-                let name = match get_input() {
-                    Some(name) => Some(name),
-                    None => None,
-                };
-
-                println!("amount: ");
-
-                let amount = match get_input() {
-                    Some(amount) => amount.parse::<f32>().unwrap(),
-                    None => 0.0,
-                };
-
-                let bill = Bill::new(name, amount);
-                bills.insert(idx, bill);
-
-                idx += 1;
-
-                println!("success");
-            }
-            Some("2") => {
-                for (key, value) in bills.iter() {
-                    println!(
-                        "{key}: name {:?}, amount {:?}",
-                        value.name.as_ref().unwrap(),
-                        value.amount
-                    )
-                }
-            }
-            Some("3") => {
-                println!("bill index");
-
-                let num = match get_input().unwrap().parse::<u32>() {
-                    Ok(num) => num,
-                    Err(_) => 0,
-                };
-
-                if num == 0 {
-                    println!("no bill was found");
-                }
-
-                bills.remove(&num);
-            }
-            Some("4") => {
-                println!("bill index");
-
-                let num = match get_input().unwrap().parse::<u32>() {
-                    Ok(num) => num,
-                    Err(_) => 0,
-                };
-
-                println!("name: ");
-
-                let name = match get_input() {
-                    Some(name) => Some(name),
-                    None => None,
-                };
-
-                println!("amount: ");
-
-                let amount = match get_input() {
-                    Some(amount) => amount.parse::<f32>().unwrap(),
-                    None => 0.0,
-                };
-
-                bills.insert(num, Bill { name, amount });
-            }
-            Some("5") => {
-                let mut total: f32 = 0.0;
-
-                for (_, bill) in bills.iter() {
-                    total += bill.amount;
-                }
-
-                println!("{total}");
-            }
-            Some(_) => {
-                println!("such option is not available");
-            }
-            None => {
-                println!("bad input");
-            }
+        match MainMenu::from_str(&input) {
+            Some(MainMenu::AddBill) => (),
+            Some(MainMenu::ViewBill) => (),
+            None => return,
         };
+        // match get_input().as_deref() {
+        //     Some("1") => {
+        //         println!("name: ");
+
+        //         let name = match get_input() {
+        //             Some(name) => Some(name),
+        //             None => None,
+        //         };
+
+        //         println!("amount: ");
+
+        //         let amount = match get_input() {
+        //             Some(amount) => amount.parse::<f32>().unwrap(),
+        //             None => 0.0,
+        //         };
+
+        //         let bill = Bill::new(name, amount);
+        //         bills.insert(idx, bill);
+
+        //         idx += 1;
+
+        //         println!("success");
+        //     }
+        //     Some("2") => {
+        //         for (key, value) in bills.iter() {
+        //             println!(
+        //                 "{key}: name {:?}, amount {:?}",
+        //                 value.name.as_ref().unwrap(),
+        //                 value.amount
+        //             )
+        //         }
+        //     }
+        //     Some("3") => {
+        //         println!("bill index");
+
+        //         let num = match get_input().unwrap().parse::<u32>() {
+        //             Ok(num) => num,
+        //             Err(_) => 0,
+        //         };
+
+        //         if num == 0 {
+        //             println!("no bill was found");
+        //         }
+
+        //         bills.remove(&num);
+        //     }
+        //     Some("4") => {
+        //         println!("bill index");
+
+        //         let num = match get_input().unwrap().parse::<u32>() {
+        //             Ok(num) => num,
+        //             Err(_) => 0,
+        //         };
+
+        //         println!("name: ");
+
+        //         let name = match get_input() {
+        //             Some(name) => Some(name),
+        //             None => None,
+        //         };
+
+        //         println!("amount: ");
+
+        //         let amount = match get_input() {
+        //             Some(amount) => amount.parse::<f32>().unwrap(),
+        //             None => 0.0,
+        //         };
+
+        //         bills.insert(num, Bill { name, amount });
+        //     }
+        //     Some("5") => {
+        //         let mut total: f32 = 0.0;
+
+        //         for (_, bill) in bills.iter() {
+        //             total += bill.amount;
+        //         }
+
+        //         println!("{total}");
+        //     }
+        //     Some(_) => {
+        //         println!("such option is not available");
+        //     }
+        //     None => {
+        //         println!("bad input");
+        //     }
     }
 }
 // lesson 85
