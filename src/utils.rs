@@ -1,9 +1,15 @@
-pub fn get_input() -> std::io::Result<String> {
+pub fn get_input() -> Option<String> {
     use ::std::io;
 
     let mut buf = String::new();
 
-    io::stdin().read_line(&mut buf)?;
+    if io::stdin().read_line(&mut buf).is_err() {
+        println!("Print data again");
+    }
 
-    return Ok(buf.trim().to_owned());
+    if &buf == "" {
+        None
+    } else {
+        Some(buf.trim().to_owned())
+    }
 }

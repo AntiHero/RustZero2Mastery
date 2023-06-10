@@ -30,19 +30,19 @@ fn main() {
 
     loop {
         match get_input().as_deref() {
-            Ok("1") => {
+            Some("1") => {
                 println!("name: ");
 
                 let name = match get_input() {
-                    Ok(name) => Some(name),
-                    Err(_) => None,
+                    Some(name) => Some(name),
+                    None => None,
                 };
 
                 println!("amount: ");
 
                 let amount = match get_input() {
-                    Ok(amount) => amount.parse::<f32>().unwrap(),
-                    Err(_) => 0.0,
+                    Some(amount) => amount.parse::<f32>().unwrap(),
+                    None => 0.0,
                 };
 
                 let bill = Bill::new(name, amount);
@@ -52,7 +52,7 @@ fn main() {
 
                 println!("success");
             }
-            Ok("2") => {
+            Some("2") => {
                 for (key, value) in bills.iter() {
                     println!(
                         "{key}: name {:?}, amount {:?}",
@@ -61,7 +61,7 @@ fn main() {
                     )
                 }
             }
-            Ok("3") => {
+            Some("3") => {
                 println!("bill index");
 
                 let num = match get_input().unwrap().parse::<u32>() {
@@ -75,7 +75,7 @@ fn main() {
 
                 bills.remove(&num);
             }
-            Ok("4") => {
+            Some("4") => {
                 println!("bill index");
 
                 let num = match get_input().unwrap().parse::<u32>() {
@@ -86,20 +86,20 @@ fn main() {
                 println!("name: ");
 
                 let name = match get_input() {
-                    Ok(name) => Some(name),
-                    Err(_) => None,
+                    Some(name) => Some(name),
+                    None => None,
                 };
 
                 println!("amount: ");
 
                 let amount = match get_input() {
-                    Ok(amount) => amount.parse::<f32>().unwrap(),
-                    Err(_) => 0.0,
+                    Some(amount) => amount.parse::<f32>().unwrap(),
+                    None => 0.0,
                 };
 
                 bills.insert(num, Bill { name, amount });
             }
-            Ok("5") => {
+            Some("5") => {
                 let mut total: f32 = 0.0;
 
                 for (_, bill) in bills.iter() {
@@ -108,10 +108,10 @@ fn main() {
 
                 println!("{total}");
             }
-            Ok(_) => {
+            Some(_) => {
                 println!("such option is not available");
             }
-            Err(_) => {
+            None => {
                 println!("bad input");
             }
         };
@@ -150,7 +150,7 @@ fn main() {
 
 //     match get_power_option(buf.as_str()) {
 //         Some(result) => println!("{:?}", result),
-//         None => println!("Error!"),
+//         None => println!("Noneor!"),
 //     }
 // }
 // lesson 84
@@ -162,7 +162,7 @@ fn main() {
 
 //     io::stdin().read_line(&mut buf)?;
 
-//     Ok(buf.trim().to_owned())
+//     Some(buf.trim().to_owned())
 // }
 
 // fn main() {
@@ -171,11 +171,11 @@ fn main() {
 
 //     while times_input < 2 {
 //         match get_input() {
-//             Ok(string) => {
+//             Some(string) => {
 //                 all_input.push(string);
 //                 times_input += 1
 //             }
-//             Err(err) => println!("{err}"),
+//             None(None) => println!("{None}"),
 //         }
 //     }
 
@@ -261,7 +261,7 @@ fn main() {
 //         /*
 //          * @arg - value to be checked
 //          * @arg - value that is expected
-//          * @arg - error message
+//          * @arg - Noneor message
 //          */
 //         assert_eq!(
 //             all_claps("hello"),
@@ -335,7 +335,7 @@ fn main() {
 // }
 // lesson 74
 // fn main() {
-//     let maybe_user = Some("Jerry");
+//     let maybe_user = Some("JNoney");
 
 //     match maybe_user {
 //         Some(user) => println!("{user}"),
@@ -544,9 +544,9 @@ fn main() {
 //         EmployeeType::Assembly | EmployeeType::Marketing | EmployeeType::Manager
 //             if employee.works == true =>
 //         {
-//             Ok(true)
+//             Some(true)
 //         }
-//         _ => Err("Forbidden".to_owned()),
+//         _ => None("Forbidden".to_owned()),
 //     }
 // }
 
@@ -573,7 +573,7 @@ fn main() {
 //     let result1 = check_access(&empl1)?;
 //     println!("{result1}");
 
-//     Ok(())
+//     Some(())
 // }
 
 // lesson 61
@@ -584,8 +584,8 @@ fn main() {
 
 // fn check_purchuase(customer: &Customer) -> Result<bool, String> {
 //     match customer.age {
-//         age if age < 18 => Err(format!("{} is too young", age)),
-//         age => Ok(true),
+//         age if age < 18 => None(format!("{} is too young", age)),
+//         age => Some(true),
 //     }
 // }
 
@@ -593,7 +593,7 @@ fn main() {
 //     let result = check_purchuase(&customer)?;
 //     println!("{}", result);
 
-//     Ok(())
+//     Some(())
 // }
 
 // fn main() {
@@ -611,17 +611,17 @@ fn main() {
 //     // println!("{:?}", check_purchuase(&user2));
 
 //     run_check(&user1);
-//     let error = run_check(&user2);
-//     println!("{:?}", error);
+//     let Noneor = run_check(&user2);
+//     println!("{:?}", Noneor);
 // }
 
 // lesson 59 ----------------
 
 // fn get_sound(name: &str) -> Result<SoundData, String> {
 //     if name == "alert" {
-//         Ok(SoundData::new("alert"))
+//         Some(SoundData::new("alert"))
 //     } else {
-//         Err("unable to find sounda data".to_owned())
+//         None("unable to find sounda data".to_owned())
 //     }
 // }
 
@@ -652,8 +652,8 @@ fn main() {
 //     };
 
 //     match sound {
-//         Ok(sound_data) => println!("Sound data is alert"),
-//         Err(e) => println!("{e}"),
+//         Some(sound_data) => println!("Sound data is alert"),
+//         None(e) => println!("{e}"),
 //     }
 // }
 
@@ -832,7 +832,7 @@ fn main() {
 
 //     // no move occurs
 //     print_employee(me);
-//     // :? - debug print token
+//     // :? - debug print tSomeen
 //     println!("{:?}", me.position);
 //     println!("{:?}", me);
 
