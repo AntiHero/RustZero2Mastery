@@ -9,17 +9,17 @@ pub struct Bills {
 }
 
 impl Bills {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self { inner: vec![] }
     }
 
-    fn add_bills(&mut self, bill: Bill) -> &Vec<Bill> {
+    pub fn add_bills(&mut self, bill: Bill) -> &Vec<Bill> {
         self.inner.push(bill);
 
         &self.inner
     }
 
-    fn get_all(&self) -> Vec<&Bill> {
+    pub fn get_all(&self) -> Vec<&Bill> {
         self.inner.iter().collect()
     }
 }

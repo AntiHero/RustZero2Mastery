@@ -32,6 +32,39 @@ impl MainMenu {
     }
 }
 
+mod menu {
+    use crate::{
+        bill::{Bill, Bills},
+        utils::get_input,
+    };
+
+    pub fn add_bill(bills: &mut Bills) {
+        println!("Bill name: ");
+
+        let name = match get_input() {
+            Some(name) => name,
+            None => return,
+        };
+
+        let amount = match get_input() {
+            Some(amount) => amount,
+            None => return,
+        };
+
+        let bill = Bill {
+            name: Some(name),
+            amount: match amount.parse::<f32>() {
+                Ok(amount) => amount,
+                Err(_) => return println!("Please enter a number"),
+            },
+        };
+
+        bills.add_bills(bill);
+
+        println!("Bill created.");
+    }
+}
+
 fn main() {
     use bill::*;
     use utils::*;
