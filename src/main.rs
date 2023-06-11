@@ -63,25 +63,34 @@ mod menu {
 
         println!("Bill created.");
     }
+
+    pub fn view_bill(bills: &Bills) {
+        for bill in bills.get_all() {
+            println!("{:?}", bill);
+        }
+    }
 }
 
 fn main() {
     use bill::*;
+    use menu::*;
     use utils::*;
 
     print_menu();
 
     use std::collections::HashMap;
 
-    let mut bills: HashMap<u32, Bill> = HashMap::new();
+    // :: - path selection operator
+    let mut bills = Bills::new();
+    // let mut bills: HashMap<u32, Bill> = HashMap::new();
     // let mut idx: u32 = 1;
 
     loop {
         let input = get_input().expect("no data entered");
 
         match MainMenu::from_str(&input) {
-            Some(MainMenu::AddBill) => (),
-            Some(MainMenu::ViewBill) => (),
+            Some(MainMenu::AddBill) => add_bill(&mut bills),
+            Some(MainMenu::ViewBill) => view_bill(&bills),
             None => return,
         };
         // match get_input().as_deref() {
