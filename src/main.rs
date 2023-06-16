@@ -20,6 +20,7 @@ fn print_menu() {
 enum MainMenu {
     AddBill,
     ViewBill,
+    RemoveBill,
 }
 
 impl MainMenu {
@@ -27,6 +28,7 @@ impl MainMenu {
         match str {
             "1" => Some(Self::AddBill),
             "2" => Some(Self::ViewBill),
+            "3" => Some(Self::RemoveBill),
             _ => None,
         }
     }
@@ -45,6 +47,8 @@ mod menu {
             Some(name) => name,
             None => return,
         };
+
+        println!("Bill amount: ");
 
         let amount = match get_input() {
             Some(amount) => amount,
@@ -69,6 +73,20 @@ mod menu {
             println!("{:?}", bill);
         }
     }
+
+    pub fn remove_bill(bills: &mut Bills) {
+        view_bill(bills);
+
+        println!("Enter bill name:");
+
+        let name = get_input().expect("No name provided");
+
+        if bills.remove(&name) {
+            println!("Sucess");
+        } else {
+            println!("Not found");
+        }
+    }
 }
 
 fn main() {
@@ -91,6 +109,7 @@ fn main() {
         match MainMenu::from_str(&input) {
             Some(MainMenu::AddBill) => add_bill(&mut bills),
             Some(MainMenu::ViewBill) => view_bill(&bills),
+            Some(MainMenu::RemoveBill) => remove_bill(&mut bills),
             None => return,
         };
         // match get_input().as_deref() {
