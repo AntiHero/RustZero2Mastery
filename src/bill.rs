@@ -35,6 +35,16 @@ impl Bills {
     pub fn remove(&mut self, key: &str) -> bool {
         self.inner.remove(key).is_some()
     }
+
+    pub fn update(&mut self, name: &str, amount: f32) -> bool {
+        match self.inner.get_mut(name) {
+            Some(bill) => {
+                bill.amount = amount;
+                true
+            }
+            None => false,
+        }
+    }
 }
 
 impl Bill {
