@@ -1,27 +1,64 @@
-// lesson 94
-trait Fall {
-    fn hit_ground(&self) {}
+// lesson 95
+trait Perimeter {
+    fn calc_perimeter(&self) -> f32;
 }
 
-struct Fruit;
+struct Square {
+    side: f32,
+}
 
-impl Fall for Fruit {
-    fn hit_ground(&self) {
-        println!("Smacksh...");
+struct Triangle {
+    side_a: f32,
+    side_b: f32,
+    side_c: f32,
+}
+
+impl Perimeter for Square {
+    fn calc_perimeter(&self) -> f32 {
+        self.side * 4.0
     }
 }
 
+impl Perimeter for Triangle {
+    fn calc_perimeter(&self) -> f32 {
+        self.side_a + self.side_b + self.side_c
+    }
+}
 fn main() {
-    let fruit = Fruit {};
+    let square = Square { side: 5.0 };
+    let triangle = Triangle {
+        side_a: 3.0,
+        side_b: 3.5,
+        side_c: 4.1,
+    };
 
-    fruit.hit_ground();
-
-    fn trait_consumer(object: impl Fall) {
-        object.hit_ground();
-    }
-
-    trait_consumer(fruit);
+    println!("{}", square.calc_perimeter());
+    println!("{}", triangle.calc_perimeter());
 }
+// lesson 94
+// trait Fall {
+//     fn hit_ground(&self) {}
+// }
+
+// struct Fruit;
+
+// impl Fall for Fruit {
+//     fn hit_ground(&self) {
+//         println!("Smacksh...");
+//     }
+// }
+
+// fn main() {
+//     let fruit = Fruit {};
+
+//     fruit.hit_ground();
+
+//     fn trait_consumer(object: impl Fall) {
+//         object.hit_ground();
+//     }
+
+//     trait_consumer(fruit);
+// }
 // lesson 86
 
 // mod bill;
