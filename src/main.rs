@@ -1,204 +1,228 @@
-// lesson 86
-
-mod bill;
-mod utils;
-
-fn print_menu() {
-    const MENU: &str = r#"
-    == Manage Bills ==
-    1. Add bill
-    2. View bills
-    3. Remove bills
-    4. Update bills
-    5. Bill total
-
-    Enter selection:
-    "#;
-    println!("{MENU}");
+// lesson 94
+trait Fall {
+    fn hit_ground(&self) {}
 }
 
-enum MainMenu {
-    AddBill,
-    ViewBill,
-    RemoveBill,
-}
+struct Fruit;
 
-impl MainMenu {
-    fn from_str(str: &str) -> Option<MainMenu> {
-        match str {
-            "1" => Some(Self::AddBill),
-            "2" => Some(Self::ViewBill),
-            "3" => Some(Self::RemoveBill),
-            _ => None,
-        }
-    }
-}
-
-mod menu {
-    use crate::{
-        bill::{Bill, Bills},
-        utils::get_input,
-    };
-
-    pub fn add_bill(bills: &mut Bills) {
-        println!("Bill name: ");
-
-        let name = match get_input() {
-            Some(name) => name,
-            None => return,
-        };
-
-        println!("Bill amount: ");
-
-        let amount = match get_input() {
-            Some(amount) => amount,
-            None => return,
-        };
-
-        let bill = Bill {
-            name: Some(name),
-            amount: match amount.parse::<f32>() {
-                Ok(amount) => amount,
-                Err(_) => return println!("Please enter a number"),
-            },
-        };
-
-        bills.add_bills(bill);
-
-        println!("Bill created.");
-    }
-
-    pub fn view_bill(bills: &Bills) {
-        for bill in bills.get_all() {
-            println!("{:?}", bill);
-        }
-    }
-
-    pub fn remove_bill(bills: &mut Bills) {
-        view_bill(bills);
-
-        println!("Enter bill name:");
-
-        let name = get_input().expect("No name provided");
-
-        if bills.remove(&name) {
-            println!("Sucess");
-        } else {
-            println!("Not found");
-        }
+impl Fall for Fruit {
+    fn hit_ground(&self) {
+        println!("Smacksh...");
     }
 }
 
 fn main() {
-    use bill::*;
-    use menu::*;
-    use utils::*;
+    let fruit = Fruit {};
 
-    print_menu();
+    fruit.hit_ground();
 
-    use std::collections::HashMap;
-
-    // :: - path selection operator
-    let mut bills = Bills::new();
-    // let mut bills: HashMap<u32, Bill> = HashMap::new();
-    // let mut idx: u32 = 1;
-
-    loop {
-        let input = get_input().expect("no data entered");
-
-        match MainMenu::from_str(&input) {
-            Some(MainMenu::AddBill) => add_bill(&mut bills),
-            Some(MainMenu::ViewBill) => view_bill(&bills),
-            Some(MainMenu::RemoveBill) => remove_bill(&mut bills),
-            None => return,
-        };
-        // match get_input().as_deref() {
-        //     Some("1") => {
-        //         println!("name: ");
-
-        //         let name = match get_input() {
-        //             Some(name) => Some(name),
-        //             None => None,
-        //         };
-
-        //         println!("amount: ");
-
-        //         let amount = match get_input() {
-        //             Some(amount) => amount.parse::<f32>().unwrap(),
-        //             None => 0.0,
-        //         };
-
-        //         let bill = Bill::new(name, amount);
-        //         bills.insert(idx, bill);
-
-        //         idx += 1;
-
-        //         println!("success");
-        //     }
-        //     Some("2") => {
-        //         for (key, value) in bills.iter() {
-        //             println!(
-        //                 "{key}: name {:?}, amount {:?}",
-        //                 value.name.as_ref().unwrap(),
-        //                 value.amount
-        //             )
-        //         }
-        //     }
-        //     Some("3") => {
-        //         println!("bill index");
-
-        //         let num = match get_input().unwrap().parse::<u32>() {
-        //             Ok(num) => num,
-        //             Err(_) => 0,
-        //         };
-
-        //         if num == 0 {
-        //             println!("no bill was found");
-        //         }
-
-        //         bills.remove(&num);
-        //     }
-        //     Some("4") => {
-        //         println!("bill index");
-
-        //         let num = match get_input().unwrap().parse::<u32>() {
-        //             Ok(num) => num,
-        //             Err(_) => 0,
-        //         };
-
-        //         println!("name: ");
-
-        //         let name = match get_input() {
-        //             Some(name) => Some(name),
-        //             None => None,
-        //         };
-
-        //         println!("amount: ");
-
-        //         let amount = match get_input() {
-        //             Some(amount) => amount.parse::<f32>().unwrap(),
-        //             None => 0.0,
-        //         };
-
-        //         bills.insert(num, Bill { name, amount });
-        //     }
-        //     Some("5") => {
-        //         let mut total: f32 = 0.0;
-
-        //         for (_, bill) in bills.iter() {
-        //             total += bill.amount;
-        //         }
-
-        //         println!("{total}");
-        //     }
-        //     Some(_) => {
-        //         println!("such option is not available");
-        //     }
-        //     None => {
-        //         println!("bad input");
-        //     }
+    fn trait_consumer(object: impl Fall) {
+        object.hit_ground();
     }
+
+    trait_consumer(fruit);
 }
+// lesson 86
+
+// mod bill;
+// mod utils;
+
+// fn print_menu() {
+//     const MENU: &str = r#"
+//     == Manage Bills ==
+//     1. Add bill
+//     2. View bills
+//     3. Remove bills
+//     4. Update bills
+//     5. Bill total
+
+//     Enter selection:
+//     "#;
+//     println!("{MENU}");
+// }
+
+// enum MainMenu {
+//     AddBill,
+//     ViewBill,
+//     RemoveBill,
+// }
+
+// impl MainMenu {
+//     fn from_str(str: &str) -> Option<MainMenu> {
+//         match str {
+//             "1" => Some(Self::AddBill),
+//             "2" => Some(Self::ViewBill),
+//             "3" => Some(Self::RemoveBill),
+//             _ => None,
+//         }
+//     }
+// }
+
+// mod menu {
+//     use crate::{
+//         bill::{Bill, Bills},
+//         utils::get_input,
+//     };
+
+//     pub fn add_bill(bills: &mut Bills) {
+//         println!("Bill name: ");
+
+//         let name = match get_input() {
+//             Some(name) => name,
+//             None => return,
+//         };
+
+//         println!("Bill amount: ");
+
+//         let amount = match get_input() {
+//             Some(amount) => amount,
+//             None => return,
+//         };
+
+//         let bill = Bill {
+//             name: Some(name),
+//             amount: match amount.parse::<f32>() {
+//                 Ok(amount) => amount,
+//                 Err(_) => return println!("Please enter a number"),
+//             },
+//         };
+
+//         bills.add_bills(bill);
+
+//         println!("Bill created.");
+//     }
+
+//     pub fn view_bill(bills: &Bills) {
+//         for bill in bills.get_all() {
+//             println!("{:?}", bill);
+//         }
+//     }
+
+//     pub fn remove_bill(bills: &mut Bills) {
+//         view_bill(bills);
+
+//         println!("Enter bill name:");
+
+//         let name = get_input().expect("No name provided");
+
+//         if bills.remove(&name) {
+//             println!("Sucess");
+//         } else {
+//             println!("Not found");
+//         }
+//     }
+// }
+
+// fn main() {
+//     use bill::*;
+//     use menu::*;
+//     use utils::*;
+
+//     print_menu();
+
+//     use std::collections::HashMap;
+
+//     // :: - path selection operator
+//     let mut bills = Bills::new();
+//     // let mut bills: HashMap<u32, Bill> = HashMap::new();
+//     // let mut idx: u32 = 1;
+
+//     loop {
+//         let input = get_input().expect("no data entered");
+
+//         match MainMenu::from_str(&input) {
+//             Some(MainMenu::AddBill) => add_bill(&mut bills),
+//             Some(MainMenu::ViewBill) => view_bill(&bills),
+//             Some(MainMenu::RemoveBill) => remove_bill(&mut bills),
+//             None => return,
+//         };
+//         // match get_input().as_deref() {
+//         //     Some("1") => {
+//         //         println!("name: ");
+
+//         //         let name = match get_input() {
+//         //             Some(name) => Some(name),
+//         //             None => None,
+//         //         };
+
+//         //         println!("amount: ");
+
+//         //         let amount = match get_input() {
+//         //             Some(amount) => amount.parse::<f32>().unwrap(),
+//         //             None => 0.0,
+//         //         };
+
+//         //         let bill = Bill::new(name, amount);
+//         //         bills.insert(idx, bill);
+
+//         //         idx += 1;
+
+//         //         println!("success");
+//         //     }
+//         //     Some("2") => {
+//         //         for (key, value) in bills.iter() {
+//         //             println!(
+//         //                 "{key}: name {:?}, amount {:?}",
+//         //                 value.name.as_ref().unwrap(),
+//         //                 value.amount
+//         //             )
+//         //         }
+//         //     }
+//         //     Some("3") => {
+//         //         println!("bill index");
+
+//         //         let num = match get_input().unwrap().parse::<u32>() {
+//         //             Ok(num) => num,
+//         //             Err(_) => 0,
+//         //         };
+
+//         //         if num == 0 {
+//         //             println!("no bill was found");
+//         //         }
+
+//         //         bills.remove(&num);
+//         //     }
+//         //     Some("4") => {
+//         //         println!("bill index");
+
+//         //         let num = match get_input().unwrap().parse::<u32>() {
+//         //             Ok(num) => num,
+//         //             Err(_) => 0,
+//         //         };
+
+//         //         println!("name: ");
+
+//         //         let name = match get_input() {
+//         //             Some(name) => Some(name),
+//         //             None => None,
+//         //         };
+
+//         //         println!("amount: ");
+
+//         //         let amount = match get_input() {
+//         //             Some(amount) => amount.parse::<f32>().unwrap(),
+//         //             None => 0.0,
+//         //         };
+
+//         //         bills.insert(num, Bill { name, amount });
+//         //     }
+//         //     Some("5") => {
+//         //         let mut total: f32 = 0.0;
+
+//         //         for (_, bill) in bills.iter() {
+//         //             total += bill.amount;
+//         //         }
+
+//         //         println!("{total}");
+//         //     }
+//         //     Some(_) => {
+//         //         println!("such option is not available");
+//         //     }
+//         //     None => {
+//         //         println!("bad input");
+//         //     }
+//     }
+// }
 // lesson 85
 // use std::io;
 
