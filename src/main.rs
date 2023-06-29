@@ -1,40 +1,77 @@
-// lesson 95
-trait Perimeter {
-    fn calc_perimeter(&self) -> f32;
+// lessoon 97
+trait Sound {
+    // self is mandatory?
+    fn make_sound(&self);
 }
 
-struct Square {
-    side: f32,
+trait Move {
+    fn r#move(&self, x: i32, y: i32);
 }
 
-struct Triangle {
-    side_a: f32,
-    side_b: f32,
-    side_c: f32,
-}
+struct Snake;
 
-impl Perimeter for Square {
-    fn calc_perimeter(&self) -> f32 {
-        self.side * 4.0
+impl Sound for Snake {
+    fn make_sound(&self) {
+        println!("Sssss...");
     }
 }
 
-impl Perimeter for Triangle {
-    fn calc_perimeter(&self) -> f32 {
-        self.side_a + self.side_b + self.side_c
+impl Move for Snake {
+    fn r#move(&self, x: i32, y: i32) {
+        println!("moving to ({}:{})", x, y);
     }
 }
+
+fn generic<T>(param: T, x: i32, y: i32)
+where
+    T: Sound + Move,
+{
+    param.make_sound();
+    param.r#move(x, y);
+}
+
 fn main() {
-    let square = Square { side: 5.0 };
-    let triangle = Triangle {
-        side_a: 3.0,
-        side_b: 3.5,
-        side_c: 4.1,
-    };
+    let snake = Snake {};
 
-    println!("{}", square.calc_perimeter());
-    println!("{}", triangle.calc_perimeter());
+    generic::<Snake>(snake, 3, 4);
 }
+// lesson 95
+// trait Perimeter {
+//     fn calc_perimeter(&self) -> f32;
+// }
+
+// struct Square {
+//     side: f32,
+// }
+
+// struct Triangle {
+//     side_a: f32,
+//     side_b: f32,
+//     side_c: f32,
+// }
+
+// impl Perimeter for Square {
+//     fn calc_perimeter(&self) -> f32 {
+//         self.side * 4.0
+//     }
+// }
+
+// impl Perimeter for Triangle {
+//     fn calc_perimeter(&self) -> f32 {
+//         self.side_a + self.side_b + self.side_c
+//     }
+// }
+// fn main() {
+//     let square = Square { side: 5.0 };
+//     let triangle = Triangle {
+//         side_a: 3.0,
+//         side_b: 3.5,
+//         side_c: 4.1,
+//     };
+
+//     println!("{}", square.calc_perimeter());
+//     println!("{}", triangle.calc_perimeter());
+// }
 // lesson 94
 // trait Fall {
 //     fn hit_ground(&self) {}
