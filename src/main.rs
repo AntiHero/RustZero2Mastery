@@ -1,40 +1,82 @@
-// lessoon 97
-trait Sound {
-    // self is mandatory?
-    fn make_sound(&self);
+// lesson 99
+#[derive(Debug)]
+enum ServicePriority {
+    High,
+    Standard,
 }
 
-trait Move {
-    fn r#move(&self, x: i32, y: i32);
+trait Priority {
+    fn get_priority(&self) -> ServicePriority;
 }
 
-struct Snake;
+struct ImportantGuest;
 
-impl Sound for Snake {
-    fn make_sound(&self) {
-        println!("Sssss...");
+impl Priority for ImportantGuest {
+    fn get_priority(&self) -> ServicePriority {
+        ServicePriority::High
     }
 }
 
-impl Move for Snake {
-    fn r#move(&self, x: i32, y: i32) {
-        println!("moving to ({}:{})", x, y);
+struct StandardGuest;
+
+impl Priority for StandardGuest {
+    fn get_priority(&self) -> ServicePriority {
+        ServicePriority::Standard
     }
 }
 
-fn generic<T>(param: T, x: i32, y: i32)
+fn print_guest<T>(guest: T)
 where
-    T: Sound + Move,
+    T: Priority,
 {
-    param.make_sound();
-    param.r#move(x, y);
+    println!("{:?}", guest.get_priority());
 }
 
 fn main() {
-    let snake = Snake {};
+    let important_guest = ImportantGuest {};
+    let standard_guest = StandardGuest {};
 
-    generic::<Snake>(snake, 3, 4);
+    println!("{:?}", print_guest(important_guest));
+    println!("{:?}", print_guest(standard_guest));
 }
+
+// lessoon 97
+// trait Sound {
+//     // self is mandatory?
+//     fn make_sound(&self);
+// }
+
+// trait Move {
+//     fn r#move(&self, x: i32, y: i32);
+// }
+
+// struct Snake;
+
+// impl Sound for Snake {
+//     fn make_sound(&self) {
+//         println!("Sssss...");
+//     }
+// }
+
+// impl Move for Snake {
+//     fn r#move(&self, x: i32, y: i32) {
+//         println!("moving to ({}:{})", x, y);
+//     }
+// }
+
+// fn generic<T>(param: T, x: i32, y: i32)
+// where
+//     T: Sound + Move,
+// {
+//     param.make_sound();
+//     param.r#move(x, y);
+// }
+
+// fn main() {
+//     let snake = Snake {};
+
+//     generic::<Snake>(snake, 3, 4);
+// }
 // lesson 95
 // trait Perimeter {
 //     fn calc_perimeter(&self) -> f32;
