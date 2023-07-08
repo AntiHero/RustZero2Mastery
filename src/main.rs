@@ -1,44 +1,116 @@
-// lesson 99
+// lesson 101 generic structures
 #[derive(Debug)]
-enum ServicePriority {
-    High,
-    Standard,
+enum BoardGame {
+    Chess,
+    Monopoly,
 }
 
-trait Priority {
-    fn get_priority(&self) -> ServicePriority;
+enum VideoGame {
+    PlayStation,
+    Xbox,
 }
 
-struct ImportantGuest;
+trait Game {
+    fn name(&self) -> String;
+}
 
-impl Priority for ImportantGuest {
-    fn get_priority(&self) -> ServicePriority {
-        ServicePriority::High
+impl Game for VideoGame {
+    fn name(&self) -> String {
+        match self {
+            VideoGame::PlayStation => "Playstayon".to_string(),
+            VideoGame::Xbox => "Xbox".to_string(),
+        }
     }
 }
 
-struct StandardGuest;
-
-impl Priority for StandardGuest {
-    fn get_priority(&self) -> ServicePriority {
-        ServicePriority::Standard
+impl Game for BoardGame {
+    fn name(&self) -> String {
+        match self {
+            BoardGame::Chess => String::from("Chess"),
+            BoardGame::Monopoly => String::from("Monopoly"),
+        }
     }
 }
 
-fn print_guest<T>(guest: T)
-where
-    T: Priority,
-{
-    println!("{:?}", guest.get_priority());
+struct PlayRoom<T: Game> {
+    game: T,
+}
+
+// concrete implementation block
+impl PlayRoom<BoardGame> {
+    pub fn cleanup(&self) {
+        println!("Cleaning up");
+    }
+}
+
+// generic implementation block
+impl<T: Game> PlayRoom<T> {
+    pub fn name(&self) {
+        println!("{}", self.game.name())
+    }
 }
 
 fn main() {
-    let important_guest = ImportantGuest {};
-    let standard_guest = StandardGuest {};
+    let board_game = BoardGame::Chess;
+    println!("{:?}", board_game.name());
 
-    println!("{:?}", print_guest(important_guest));
-    println!("{:?}", print_guest(standard_guest));
+    let video_game = VideoGame::Xbox;
+    println!("{:?}", video_game.name());
+
+    let board_playroom = PlayRoom {
+        game: BoardGame::Chess,
+    };
+
+    board_playroom.cleanup();
+
+    let video_playroom = PlayRoom {
+        game: VideoGame::Xbox,
+    };
+
+    video_playroom.name();
 }
+
+// lesson 99
+// #[derive(Debug)]
+// enum ServicePriority {
+//     High,
+//     Standard,
+// }
+
+// trait Priority {
+//     fn get_priority(&self) -> ServicePriority;
+// }
+
+// struct ImportantGuest;
+
+// impl Priority for ImportantGuest {
+//     fn get_priority(&self) -> ServicePriority {
+//         ServicePriority::High
+//     }
+// }
+
+// struct StandardGuest;
+
+// impl Priority for StandardGuest {
+//     fn get_priority(&self) -> ServicePriority {
+//         ServicePriority::Standard
+//     }
+// }
+
+// fn print_guest<T>(guest: T)
+// where
+//     T: Priority,
+// {
+//     println!("{:?}", guest.get_priority());
+// }
+
+// fn main() {
+//     let important_guest = ImportantGuest {};
+//     let standard_guest = StandardGuest {};
+
+//     println!("{:?}", print_guest(important_guest));
+//     println!("{:?}", print_guest(standard_guest));
+// }
 
 // lessoon 97
 // trait Sound {
