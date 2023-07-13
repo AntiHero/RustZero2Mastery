@@ -1,74 +1,135 @@
-// lesson 101 generic structures
-#[derive(Debug)]
-enum BoardGame {
-    Chess,
-    Monopoly,
+// lesson 104
+trait Body {}
+
+trait Color {}
+
+struct Car {}
+
+struct Truck {}
+
+struct Red {}
+
+struct Blue {}
+
+impl Color for Red {}
+impl Color for Blue {}
+
+impl Body for Car {}
+impl Body for Truck {}
+
+struct VehicleBody<T: Body> {
+    pub body: T,
 }
 
-enum VideoGame {
-    PlayStation,
-    Xbox,
+struct Vehicle<B: Body, C: Color> {
+    body: B,
+    color: C,
 }
 
-trait Game {
-    fn name(&self) -> String;
-}
-
-impl Game for VideoGame {
-    fn name(&self) -> String {
-        match self {
-            VideoGame::PlayStation => "Playstayon".to_string(),
-            VideoGame::Xbox => "Xbox".to_string(),
-        }
-    }
-}
-
-impl Game for BoardGame {
-    fn name(&self) -> String {
-        match self {
-            BoardGame::Chess => String::from("Chess"),
-            BoardGame::Monopoly => String::from("Monopoly"),
-        }
-    }
-}
-
-struct PlayRoom<T: Game> {
-    game: T,
-}
-
-// concrete implementation block
-impl PlayRoom<BoardGame> {
-    pub fn cleanup(&self) {
-        println!("Cleaning up");
-    }
-}
-
-// generic implementation block
-impl<T: Game> PlayRoom<T> {
-    pub fn name(&self) {
-        println!("{}", self.game.name())
+impl<B: Body, C: Color> Vehicle<B, C> {
+    fn new(body: B, color: C) -> Self {
+        Self { body, color }
     }
 }
 
 fn main() {
-    let board_game = BoardGame::Chess;
-    println!("{:?}", board_game.name());
-
-    let video_game = VideoGame::Xbox;
-    println!("{:?}", video_game.name());
-
-    let board_playroom = PlayRoom {
-        game: BoardGame::Chess,
-    };
-
-    board_playroom.cleanup();
-
-    let video_playroom = PlayRoom {
-        game: VideoGame::Xbox,
-    };
-
-    video_playroom.name();
+    let red_truck = Vehicle::new(Truck {}, Red {});
+    let blue_bmw = Vehicle::new(Car {}, Blue {});
 }
+// lesson 10
+struct Dimension {
+    width: f64,
+    height: f64,
+    depth: f64,
+}
+
+trait Convey {
+    fn weight(&self) -> f64;
+
+    fn dimensions(&self) -> Dimension;
+}
+
+struct ConveyorBelt<T: Convey> {
+    pub items: Vec<T>,
+}
+
+impl<T: Convey> ConveyorBelt<T> {
+    pub fn add(&mut self, item: T) {
+        self.items.push(item);
+    }
+}
+fn main() {}
+// lesson 101 generic structures
+// #[derive()]
+// enum BoardGame {
+//     Chess,
+//     Monopoly,
+// }
+
+// enum VideoGame {
+//     PlayStation,
+//     Xbox,
+// }
+
+// trait Game {
+//     fn name(&self) -> String;
+// }
+
+// impl Game for VideoGame {
+//     fn name(&self) -> String {
+//         match self {
+//             VideoGame::PlayStation => "Playstayon".to_string(),
+//             VideoGame::Xbox => "Xbox".to_string(),
+//         }
+//     }
+// }
+
+// impl Game for BoardGame {
+//     fn name(&self) -> String {
+//         match self {
+//             BoardGame::Chess => String::from("Chess"),
+//             BoardGame::Monopoly => String::from("Monopoly"),
+//         }
+//     }
+// }
+
+// struct PlayRoom<T: Game> {
+//     game: T,
+// }
+
+// // concrete implementation block
+// impl PlayRoom<BoardGame> {
+//     pub fn cleanup(&self) {
+//         println!("Cleaning up");
+//     }
+// }
+
+// // generic implementation block
+// impl<T: Game> PlayRoom<T> {
+//     pub fn name(&self) {
+//         println!("{}", self.game.name())
+//     }
+// }
+
+// fn main() {
+//     let board_game = BoardGame::Chess;
+//     println!("{:?}", board_game.name());
+
+//     let video_game = VideoGame::Xbox;
+//     println!("{:?}", video_game.name());
+
+//     let board_playroom = PlayRoom {
+//         game: BoardGame::Chess,
+//     };
+
+//     board_playroom.cleanup();
+
+//     let video_playroom = PlayRoom {
+//         game: VideoGame::Xbox,
+//     };
+
+//     video_playroom.name();
+// }
 
 // lesson 99
 // #[derive(Debug)]
