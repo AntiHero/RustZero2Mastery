@@ -1,64 +1,121 @@
-// lesson 104
-trait Body {}
-
-trait Color {}
-
-struct Car {}
-
-struct Truck {}
-
-struct Red {}
-
-struct Blue {}
-
-impl Color for Red {}
-impl Color for Blue {}
-
-impl Body for Car {}
-impl Body for Truck {}
-
-struct VehicleBody<T: Body> {
-    pub body: T,
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
 }
 
-struct Vehicle<B: Body, C: Color> {
-    body: B,
-    color: C,
-}
+fn largest_num<T: PartialOrd + Copy, E: ToString>(list: &[T]) -> Result<T, E> {
+    let mut largest = &list[0];
 
-impl<B: Body, C: Color> Vehicle<B, C> {
-    fn new(body: B, color: C) -> Self {
-        Self { body, color }
+    for num in list {
+        if num > largest {
+            largest = num;
+        }
     }
+
+    Result::Ok(*largest)
 }
 
 fn main() {
-    let red_truck = Vehicle::new(Truck {}, Red {});
-    let blue_bmw = Vehicle::new(Car {}, Blue {});
+    let vec = vec![1, 2, 3, 4, 5];
+
+    largest_num::<i32, &str>(&vec);
 }
+// lesson 105
+// trait Clicky {
+//     fn click(&self);
+// }
+
+// #[derive(Debug)]
+// struct Keyboard {}
+
+// impl Clicky for Keyboard {
+//     fn click(&self) {
+//         println!("click clack");
+//     }
+// }
+
+// fn borrow_clicky(obj: &dyn Clicky) {
+//     obj.click();
+// }
+
+// fn main() {
+//     let keyboard = Keyboard {};
+//     keyboard.click();
+
+//     let keeb = Keyboard {};
+//     // dyanamic dispatch, traits has static dyspatch
+//     let keeb_obj: &dyn Clicky = &keeb;
+//     let keeb: &dyn Clicky = &Keyboard {};
+
+//     borrow_clicky(keeb);
+
+//     let keeb: Box<dyn Clicky> = Box::new(Keyboard {});
+// }
+// lesson 104
+// trait Body {}
+
+// trait Color {}
+
+// struct Car {}
+
+// struct Truck {}
+
+// struct Red {}
+
+// struct Blue {}
+
+// impl Color for Red {}
+// impl Color for Blue {}
+
+// impl Body for Car {}
+// impl Body for Truck {}
+
+// struct VehicleBody<T: Body> {
+//     pub body: T,
+// }
+
+// struct Vehicle<B: Body, C: Color> {
+//     body: B,
+//     color: C,
+// }
+
+// impl<B: Body, C: Color> Vehicle<B, C> {
+//     fn new(body: B, color: C) -> Self {
+//         Self { body, color }
+//     }
+// }
+
+// fn main() {
+//     let red_truck = Vehicle::new(Truck {}, Red {});
+//     let blue_bmw = Vehicle::new(Car {}, Blue {});
+
+//     let str = "abba";
+//     let str_2 = String::from("abba");
+
+//     println!("{}", str == str_2);
+// }
 // lesson 10
-struct Dimension {
-    width: f64,
-    height: f64,
-    depth: f64,
-}
+// struct Dimension {
+//     width: f64,
+//     height: f64,
+//     depth: f64,
+// }
 
-trait Convey {
-    fn weight(&self) -> f64;
+// trait Convey {
+//     fn weight(&self) -> f64;
 
-    fn dimensions(&self) -> Dimension;
-}
+//     fn dimensions(&self) -> Dimension;
+// }
 
-struct ConveyorBelt<T: Convey> {
-    pub items: Vec<T>,
-}
+// struct ConveyorBelt<T: Convey> {
+//     pub items: Vec<T>,
+// }
 
-impl<T: Convey> ConveyorBelt<T> {
-    pub fn add(&mut self, item: T) {
-        self.items.push(item);
-    }
-}
-fn main() {}
+// impl<T: Convey> ConveyorBelt<T> {
+//     pub fn add(&mut self, item: T) {
+//         self.items.push(item);
+//     }
+// }
 // lesson 101 generic structures
 // #[derive()]
 // enum BoardGame {
