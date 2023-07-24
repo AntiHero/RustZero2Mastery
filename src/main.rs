@@ -1,25 +1,60 @@
-enum Result<T, E> {
-    Ok(T),
-    Err(E),
+// lesson 106
+trait Sale {
+    fn amount(&self) -> f64;
 }
 
-fn largest_num<T: PartialOrd + Copy, E: ToString>(list: &[T]) -> Result<T, E> {
-    let mut largest = &list[0];
+struct FullSale(f64);
 
-    for num in list {
-        if num > largest {
-            largest = num;
-        }
+// tuple struct
+impl Sale for FullSale {
+    fn amount(&self) -> f64 {
+        self.0
     }
+}
 
-    Result::Ok(*largest)
+struct TenPercentOffPromo(f64);
+
+impl Sale for TenPercentOffPromo {
+    fn amount(&self) -> f64 {
+        self.0 * 0.9
+    }
+}
+
+fn calculate_revenue(sales: &Vec<Box<dyn Sale>>) -> f64 {
+    sales.iter().map(|sale| sale.amount()).sum()
 }
 
 fn main() {
-    let vec = vec![1, 2, 3, 4, 5];
+    let regular = Box::new(FullSale(20.0));
+    let promo = Box::new(TenPercentOffPromo(20.0));
 
-    largest_num::<i32, &str>(&vec);
+    let sales: Vec<Box<dyn Sale>> = vec![regular, promo];
+
+    let result = calculate_revenue(&sales);
+    println!("{result}, amount");
 }
+// enum Result<T, E> {
+//     Ok(T),
+//     Err(E),
+// }
+
+// fn largest_num<T: PartialOrd + Copy, E: ToString>(list: &[T]) -> Result<T, E> {
+//     let mut largest = &list[0];
+
+//     for num in list {
+//         if num > largest {
+//             largest = num;
+//         }
+//     }
+
+//     Result::Ok(*largest)
+// }
+
+// fn main() {
+//     let vec = vec![1, 2, 3, 4, 5];
+
+//     largest_num::<i32, &str>(&vec);
+// }
 // lesson 105
 // trait Clicky {
 //     fn click(&self);
