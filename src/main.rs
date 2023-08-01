@@ -1,38 +1,100 @@
-// lesson 106
-trait Sale {
-    fn amount(&self) -> f64;
+// lesson 107
+trait Material {
+    fn cost_per_square_meter(&self) -> f32;
+
+    fn square_meters(&self) -> f32;
+
+    fn total_cost(&self) -> f32 {
+        self.cost_per_square_meter() * self.square_meters()
+    }
 }
 
-struct FullSale(f64);
+struct Carpet(f32);
 
-// tuple struct
-impl Sale for FullSale {
-    fn amount(&self) -> f64 {
+struct Tile(f32);
+
+struct Wood(f32);
+
+fn total_cost(material: &Vec<Box<dyn Material>>) -> f32 {
+    material.iter().map(|material| material.total_cost()).sum()
+}
+
+impl Material for Carpet {
+    fn cost_per_square_meter(&self) -> f32 {
+        10.0
+    }
+
+    fn square_meters(&self) -> f32 {
         self.0
     }
 }
 
-struct TenPercentOffPromo(f64);
+impl Material for Wood {
+    fn cost_per_square_meter(&self) -> f32 {
+        5.0
+    }
 
-impl Sale for TenPercentOffPromo {
-    fn amount(&self) -> f64 {
-        self.0 * 0.9
+    fn square_meters(&self) -> f32 {
+        self.0
     }
 }
 
-fn calculate_revenue(sales: &Vec<Box<dyn Sale>>) -> f64 {
-    sales.iter().map(|sale| sale.amount()).sum()
+impl Material for Tile {
+    fn cost_per_square_meter(&self) -> f32 {
+        5.0
+    }
+
+    fn square_meters(&self) -> f32 {
+        self.0
+    }
 }
 
 fn main() {
-    let regular = Box::new(FullSale(20.0));
-    let promo = Box::new(TenPercentOffPromo(20.0));
+    let materials: Vec<Box<dyn Material>> = vec![
+        Box::new(Carpet(20.0)),
+        Box::new(Wood(11.5)),
+        Box::new(Tile(15.7)),
+    ];
 
-    let sales: Vec<Box<dyn Sale>> = vec![regular, promo];
+    let result = total_cost(&materials);
 
-    let result = calculate_revenue(&sales);
-    println!("{result}, amount");
+    println!("{result}");
 }
+// lesson 106
+// trait Sale {
+//     fn amount(&self) -> f64;
+// }
+
+// struct FullSale(f64);
+
+// // tuple struct
+// impl Sale for FullSale {
+//     fn amount(&self) -> f64 {
+//         self.0
+//     }
+// }
+
+// struct TenPercentOffPromo(f64);
+
+// impl Sale for TenPercentOffPromo {
+//     fn amount(&self) -> f64 {
+//         self.0 * 0.9
+//     }
+// }
+
+// fn calculate_revenue(sales: &Vec<Box<dyn Sale>>) -> f64 {
+//     sales.iter().map(|sale| sale.amount()).sum()
+// }
+
+// fn main() {
+//     let regular = Box::new(FullSale(20.0));
+//     let promo = Box::new(TenPercentOffPromo(20.0));
+
+//     let sales: Vec<Box<dyn Sale>> = vec![regular, promo];
+
+//     let result = calculate_revenue(&sales);
+//     println!("{result}, amount");
+// }
 // enum Result<T, E> {
 //     Ok(T),
 //     Err(E),
